@@ -17,29 +17,26 @@ import backgroundImage from '../assets/login-image.jpg';
 export const Login = () => {
   const { setUser } = useContext(UserContext);
   const history = useHistory();
-  const [open, setOpen] = useState(false);
+  const [loginError, setLoginError] = useState(false);
 
   const handleValidateUser = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    let validateUser = {
+    let user = {
       username: data.get('username'),
       password: data.get('password'),
     };
 
-    if (
-      validateUser.username === 'ipgautomotive' &&
-      validateUser.password === 'carmaker'
-    ) {
+    if (user.username === 'ipgautomotive' && user.password === 'carmaker') {
       setUser({
-        username: 'mart',
-        passowrd: 'test',
+        username: user.username,
+        password: user.password,
       });
-      setOpen(false);
+      setLoginError(false);
       history.push('/main');
     } else {
-      setOpen(true);
+      setLoginError(true);
     }
   };
 
@@ -63,6 +60,23 @@ export const Login = () => {
         }}
       />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Typography
+          variant="h2"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            backgroundColor: '#87CEEB',
+            height: '100px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            mb: 2,
+            fontWeight: 500,
+            color: '#fff',
+          }}
+        >
+          Weather App
+        </Typography>
         <Box
           sx={{
             my: 8,
@@ -111,7 +125,7 @@ export const Login = () => {
               Log In
             </Button>
           </Box>
-          {open && (
+          {loginError && (
             <>
               <Alert severity="error">
                 Your log in credentials are incorrect!

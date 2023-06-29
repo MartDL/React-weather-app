@@ -11,7 +11,7 @@ export const WeatherCard = ({ title, removeItem }) => {
   return (
     <>
       {loading && <div>loading...</div>}
-      {weatherData && (
+      {weatherData ? (
         <Card sx={{ width: 210, height: 290, margin: 1, padding: 2 }}>
           <div
             style={{
@@ -25,7 +25,6 @@ export const WeatherCard = ({ title, removeItem }) => {
               alt="Image"
               style={{ width: '50%' }}
             />
-
             <Button
               onClick={removeItem}
               sx={{ borderRadius: '50px', width: '20px', color: '#888' }}
@@ -51,8 +50,31 @@ export const WeatherCard = ({ title, removeItem }) => {
             </Typography>
           </CardContent>
         </Card>
+      ) : (
+        <Card sx={{ width: 210, height: 290, margin: 1, padding: 2 }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+            }}
+          >
+            <div></div>
+            <Button
+              onClick={removeItem}
+              sx={{ borderRadius: '50px', width: '20px', color: '#888' }}
+            >
+              <CloseIcon />
+            </Button>
+          </div>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {title}
+            </Typography>
+            {error}
+          </CardContent>
+        </Card>
       )}
-      {!weatherData && <div>No data,...</div>}
     </>
   );
 };

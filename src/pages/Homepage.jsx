@@ -13,11 +13,12 @@ import { WeatherCard } from '../components/index';
 
 export const Homepage = () => {
   const { user, setUser } = useContext(UserContext);
-  const history = useHistory();
 
   const [inputValue, setInputValue] = useState('');
   const [listItems, setListItems] = useState([]);
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
+
+  const history = useHistory();
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -37,6 +38,7 @@ export const Homepage = () => {
 
   const handleLogout = () => {
     setUser(null);
+    setListItems([]);
     history.push('/login');
   };
 
@@ -63,7 +65,7 @@ export const Homepage = () => {
           onClick={handleLogout}
           sx={{
             position: 'absolute',
-            top: '25px',
+            top: '33px',
             right: '50px',
             backgroundColor: '#fff',
             color: '#888',
@@ -125,6 +127,21 @@ export const Homepage = () => {
           onClick={handleAddItem}
         >
           Add
+        </Button>
+        <Button
+          variant="contained"
+          disabled={listItems.length < 1}
+          sx={{
+            ml: 2,
+            mb: 2,
+            '&:hover': {
+              color: '#fff',
+              cursor: 'pointer',
+            },
+          }}
+          onClick={() => setListItems([])}
+        >
+          Clear all
         </Button>
         <Grid container spacing={1} justify="center" alignItems="center">
           {listItems.map((item, index) => (

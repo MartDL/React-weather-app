@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import { Login, Homepage } from './pages';
 import { UserContext } from './context/user/UserProvider';
+import './App.css';
 
 function App() {
   const { user } = useContext(UserContext);
