@@ -1,1 +1,1 @@
-export { Login } from '../pages/Login'
+export { WeatherCard } from './WeatherCard';

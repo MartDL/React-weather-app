@@ -1,21 +1,47 @@
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import Paper from '@mui/material/Paper'
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { UserContext } from '../context/user/UserProvider';
+import {
+  Alert,
+  Avatar,
+  Typography,
+  Grid,
+  Box,
+  Paper,
+  CssBaseline,
+  TextField,
+  Button,
+} from '@mui/material';
+import backgroundImage from '../assets/login-image.jpg';
 
 export const Login = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get('email'),
+  const { setUser } = useContext(UserContext);
+  const history = useHistory();
+  const [open, setOpen] = useState(false);
+
+  const handleValidateUser = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    let validateUser = {
+      username: data.get('username'),
       password: data.get('password'),
-    })
-  }
+    };
+
+    if (
+      validateUser.username === 'ipgautomotive' &&
+      validateUser.password === 'carmaker'
+    ) {
+      setUser({
+        username: 'mart',
+        passowrd: 'test',
+      });
+      setOpen(false);
+      history.push('/main');
+    } else {
+      setOpen(true);
+    }
+  };
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>
@@ -26,8 +52,8 @@ export const Login = () => {
         sm={4}
         md={7}
         sx={{
-          backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-          backgroundRepeat: 'no-repeat',
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundRepeat: 'repeat',
           backgroundColor: (t) =>
             t.palette.mode === 'light'
               ? t.palette.grey[50]
@@ -53,7 +79,7 @@ export const Login = () => {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleValidateUser}
             sx={{ mt: 1 }}
           >
             <TextField
@@ -62,7 +88,7 @@ export const Login = () => {
               fullWidth
               id="Username"
               label="Username"
-              name="email"
+              name="username"
               autoComplete="email"
               autoFocus
             />
@@ -85,8 +111,15 @@ export const Login = () => {
               Log In
             </Button>
           </Box>
+          {open && (
+            <>
+              <Alert severity="error">
+                Your log in credentials are incorrect!
+              </Alert>
+            </>
+          )}
         </Box>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
