@@ -3,7 +3,8 @@ import { CardContent, Typography, Card, Button } from '@mui/material';
 import { useWeatherAPI } from '../hooks/useWeatherAPI';
 import CloseIcon from '@mui/icons-material/Close';
 
-const apiKey = process.env.REACT_APP_API_KEY;
+// const apiKey = process.env.REACT_APP_API_KEY;
+const apiKey = '146c9c424f0d4006836143440232806';
 
 export const WeatherCard = ({ title, removeItem }) => {
   const { weatherData, loading, error } = useWeatherAPI(apiKey, title);
